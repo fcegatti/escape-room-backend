@@ -15,6 +15,13 @@ use App\Http\Controllers\Auth\AuthController;
 |
 */
 
-Route::post('register', [AuthController::class,'register']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 
-Route::post('login', [AuthController::class,'login']);
+Route::get('users', [UserController::class, 'index']);
+
+//protected
+
+Route::middleware('jwt.verify') -> group(function(){
+    Route::apiResource('users', UserController::class);
+});
