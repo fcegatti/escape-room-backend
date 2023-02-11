@@ -49,7 +49,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
+        $user->participed = $request->input('participed') == 'true' ? true : false;
+        $user->save();
         return response()->json($user);
     }
 
