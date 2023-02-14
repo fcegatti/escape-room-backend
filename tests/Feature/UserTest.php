@@ -69,7 +69,7 @@ class UserTest extends TestCase
             'password' => 'examplepassword',
         ];
         
-        $response = $this->post('/api/login', $dataUser);
+        $response = $this->post('/api/login', $dataUserLogin);
         
         $response->assertStatus(200);
 
