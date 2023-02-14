@@ -23,7 +23,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function register_return_access_token()
+    public function test_register_return_access_token()
     {
         $dataUser = [
             'name' => 'nameexample',
@@ -42,5 +42,38 @@ class UserTest extends TestCase
             'name' => 'nameexample',
             'email' => 'example@email.com',
         ]);
+    }
+
+    public function test_login_return_access_token()
+    {
+        $dataUser = [
+            'name' => 'nameexample',
+            'email' => 'example@email.com',
+            'password' => 'examplepassword',
+            'password_confirmation' => 'examplepassword',
+        ];
+
+        $response = $this->post('/api/register', $dataUser);
+        
+        $response->assertStatus(201);
+        
+        $response->assertJsonStructure(['token']);
+        
+        $this->assertDatabaseHas('users', [
+            'name' => 'nameexample',
+            'email' => 'example@email.com',
+        ]);
+
+        $dataUserLogin = [
+            'email' => 'example@email.com',
+            'password' => 'examplepassword',
+        ];
+        
+        $response = $this->post('/api/login', $dataUser);
+        
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure(['token']);
+        
     }
 }
