@@ -23,5 +23,6 @@ Route::middleware('jwt.verify') -> group(function(){
 
 
 Route::post('escape', [EscapeController::class, 'store']);
+Route::get('escape', [EscapeController::class, 'index']);
 Route::apiResource('escape', EscapeController::class);
 // ruta para todos los metodos 

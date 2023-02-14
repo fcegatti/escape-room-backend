@@ -13,12 +13,17 @@ class EscapeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return Escape::all();
+
+    {     
+        $escapes = Escape::with(['problems'])->get();
+        return response()->json([
+            'escapes' => $escapes,
+        ]);
     }
+        
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,7 +45,7 @@ class EscapeController extends Controller
         $escape->stage = $request->stage;
         $escape->save();
 
-        $escape->problems()->sync($request->input('problems',[] ));
+        
         //el sync nos va a incertar los datos en la tabla intermedia
         return $escape;     
     }

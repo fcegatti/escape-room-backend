@@ -17,7 +17,8 @@ class ProblemFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'statement' => fake()->name(),
+            'solution' => 'status',
         ];
     }
 }

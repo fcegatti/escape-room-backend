@@ -11,7 +11,8 @@ class Problem extends Model
 
     public function escapes(){
 
-        return $this->belongsToMany(Problem::class);
+        return $this->belongsToMany(Escape::class);
+        
         }
 }
 

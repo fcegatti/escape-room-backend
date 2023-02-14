@@ -15,6 +15,23 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         \App\Models\Escape::factory(5)->create();
+        
+        \App\Models\Problem::factory(5)->create();
+
+       $escape = \App\Models\Escape::factory()->create([
+            'title' => fake()->name(),
+            'status' => 'status',
+            'time' => fake()->time(),
+            'init_time' => fake()->date(),
+            'stage' =>fake()->randomDigit(),
+     
+
+        ]);
+
+        $escape->problems()->attach([
+            1,2
+        ]);
+        
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

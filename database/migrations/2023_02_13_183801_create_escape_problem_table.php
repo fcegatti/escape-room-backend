@@ -17,6 +17,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('escape_id')->nullable()->constrained();
             $table->foreignId('problem_id')->nullable()->constrained();
+
+            // $table->unsignedBigInteger('curso_id');
+            // $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('cascade');
+    
+            // $table->unsignedBigInteger('estudiante_id');
+            // $table->foreign('estudiante_id')->references('id')->on('estudiantes')->onDelete('cascade');
+    
+        
         });
     }
 
