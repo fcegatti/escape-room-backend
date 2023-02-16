@@ -28,5 +28,5 @@ Route::middleware('role:admin,super_admin') -> group(function(){
 
 //only super admin
 Route::middleware('role:super_admin') -> group(function(){
+    Route::post('register_admin', [AuthController::class, 'register_admin']);
 });
-Route::post('register_admin', [AuthController::class, 'register_admin']);
