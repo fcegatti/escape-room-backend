@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Escape::factory(4)->create();
+        \App\Models\Escape::factory(5)->create();
         
         \App\Models\Problem::factory(5)->create();
         \App\Models\Room::factory(5)->create();
@@ -29,12 +29,10 @@ class DatabaseSeeder extends Seeder
             'stage' =>fake()->randomDigit(),
 
         ]);
-
         // many to many
         $escape->problems()->attach([
             1,2,3
         ]);
-
         // one to many
         $room = Room::find(1);
         $escape->rooms()->save($room);
