@@ -15,13 +15,13 @@ class EscapeController extends Controller
      */
     public function index()
 
-    {     
-        $escapes = Escape::with(['problems','rooms','users'])->get();
+    {
+        $escapes = Escape::with(['problems', 'rooms', 'users'])->get();
         return response()->json([
             'escapes' => $escapes,
         ]);
     }
-        
+
 
     /**
      * Store a newly created resource in storage
@@ -32,27 +32,32 @@ class EscapeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=> 'required',
-            'status'=> 'required',
-            'time'=> 'required',
-            'init_time'=> 'required',
-            'stage'=>'required',
-    ]);    
-        $escape = new Escape();
-        $escape->title = $request->title;
-        $escape->status =$request->status;
-        $escape->time =$request->time;
-        $escape->init_time = $request->init_time;
-        $escape->stage = $request->stage;
-        $escape->save();
+            'title' => 'required',
+            'status' => 'required',
+            'time' => 'required',
+            'init_time' => 'required',
+            'stage' => 'required',
+        ]);
+        try {
+            $escape = new Escape();
+            $escape->title = $request->title;
+            $escape->status = $request->status;
+            $escape->time = $request->time;
+            $escape->init_time = $request->init_time;
+            $escape->stage = $request->stage;
+            $escape->rooms_amount = $request->rooms_amount;
+            $escape->save();
 
-        // // for ($i=0; $i < $request->rooms->length; $i++) {
-        // //     $room = Room::find($request->rooms[$i] );
-        // // $escape->rooms()->save($room); 
-            
-        // }
-        
-        return $escape;     
+            return response()->json(['success' => true, 'message' => 'Escape created successfully', $escape]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error creating escape: ' . $e->getMessage()]);
+        }
+
+        //     // // for ($i=0; $i < $request->rooms->length; $i++) {
+        //     // //     $room = Room::find($request->rooms[$i] );
+        //     // // $escape->rooms()->save($room); 
+
+        //     // }
     }
 
     /**
@@ -76,16 +81,16 @@ class EscapeController extends Controller
     public function update(Request $request, Escape $escape)
     {
         $request->validate([
-            'title'=> 'required',
-            'status'=> 'required',
-            'time'=> 'required',
-            'init_time'=> 'required',
-            'stage'=> 'required',
-    ]);    
-        
+            'title' => 'required',
+            'status' => 'required',
+            'time' => 'required',
+            'init_time' => 'required',
+            'stage' => 'required',
+        ]);
+
         $escape->title = $request->title;
-        $escape->status =$request->status;
-        $escape->time =$request->time;
+        $escape->status = $request->status;
+        $escape->time = $request->time;
         $escape->init_time = $request->init_time;
         $escape->update();
     }
