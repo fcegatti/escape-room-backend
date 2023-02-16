@@ -17,7 +17,7 @@ class ClueFactory extends Factory
     public function definition()
     {
         return [
-            //
+          'clue' => fake()->name(),
         ];
     }
 }

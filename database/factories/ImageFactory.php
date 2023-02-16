@@ -16,8 +16,9 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
-        return [
-            //
-        ];
+      return [
+        'image' => fake()->name(),
+        
+    ];
     }
 }

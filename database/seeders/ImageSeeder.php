@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Image;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ImageSeeder extends Seeder
@@ -14,6 +15,6 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
-        //
+         \App\Models\Image::factory(5)->create();
     }
 }
