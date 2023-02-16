@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('clues', function (Blueprint $table) {
             $table->id();
+            $table->string('clue');
             $table->unsignedBigInteger('problems_id')->nullable();
             $table->timestamps();
             $table->foreign('problems_id')->references('id')->on('problems')->onDelete('cascade');

@@ -10,6 +10,6 @@ class Clue extends Model
     use HasFactory;
 
     public function problem() {
-      return $this->belongsTo(Clue::class);
+      return $this->belongsTo(Problem::class);
     }
 }

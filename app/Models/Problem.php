@@ -10,7 +10,7 @@ class Problem extends Model
     use HasFactory;
 
     public function clues() {
-      return $this->hasMany(Problem::class);
+      return $this->hasMany(Clue::class);
     }
 }
 

@@ -12,6 +12,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::get('users', [UserController::class, 'index']);
+Route::get('clue', [ClueController::class, 'index']);
 
 //protected
 
