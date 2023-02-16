@@ -58,4 +58,9 @@ class User extends Authenticatable implements JWTSubject
 
         return $this->belongsTo(Room::class);
     }
+
+    public function escape(){
+
+        return $this->belongsTo(Escape::class);
+    }
 }

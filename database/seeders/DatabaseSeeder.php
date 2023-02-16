@@ -21,12 +21,13 @@ class DatabaseSeeder extends Seeder
         \App\Models\Problem::factory(5)->create();
         \App\Models\Room::factory(5)->create();
 
-       $escape = \App\Models\Escape::factory()->create([
+        $escape = \App\Models\Escape::factory()->create([
             'title' => fake()->name(),
             'status' => 'status',
             'time' => fake()->time(),
             'init_time' => fake()->date(),
             'stage' =>fake()->randomDigit(),
+            'rooms_amount' =>fake()->randomDigit(),
 
         ]);
         // many to many

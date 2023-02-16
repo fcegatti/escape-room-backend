@@ -20,6 +20,11 @@ class Escape extends Model
              
         return $this->hasMany(Room::class);
     }
+
+    public function users(){   
+             
+        return $this->hasMany(User::class);
+    }
 }
 
 // return $this->belongsToMany(Problem::class ,'escape_problem ', 'escape_id', 'problem_id'); PUEDO PRECINDIR DE ESOS PARAMETROS CON LARAVEL
