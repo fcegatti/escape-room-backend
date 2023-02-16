@@ -23,9 +23,10 @@ Route::post('login', [AuthController::class, 'login']);
 //admin and super_admin 
 Route::middleware('role:admin,super_admin') -> group(function(){
     Route::get('users', [UserController::class, 'index']);
+    // Route::get('users', [UserController::class, 'index']);
 });
 
 //only super admin
 Route::middleware('role:super_admin') -> group(function(){
-    Route::post('register_admin', [AuthController::class, 'register_admin']);
 });
+Route::post('register_admin', [AuthController::class, 'register_admin']);
