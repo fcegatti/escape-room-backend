@@ -52,4 +52,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    
+    // Relacion uno a muchos(inversa)
+    public function room(){
+
+        return $this->belongsTo(Room::class);
+    }
+
+    public function escape(){
+
+        return $this->belongsTo(Escape::class);
+    }
 }
