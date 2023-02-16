@@ -16,13 +16,16 @@ use App\Http\Controllers\Auth\AuthController;
 |
 */
 
+//all
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('users', [UserController::class, 'index']);
+//admin and super_admin 
+Route::middleware('role:admin,super_admin') -> group(function(){
+    Route::get('users', [UserController::class, 'index']);
+});
 
-//protected
-
-Route::middleware('jwt.verify') -> group(function(){
-    Route::apiResource('users', UserController::class);
+//only super admin
+Route::middleware('role:super_admin') -> group(function(){
+    Route::post('register_admin', [AuthController::class, 'register_admin']);
 });
