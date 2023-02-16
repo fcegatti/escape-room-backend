@@ -16,6 +16,9 @@ class Problem extends Model
     public function images() {
       return $this->hasMany(Image::class);
     }
+
 }
+
+
 
 
