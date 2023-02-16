@@ -103,6 +103,7 @@ class EscapeController extends Controller
      */
     public function destroy(Escape $escape)
     {
-        $escape->dalete();
+        $escape->delete();
+        return response()->json('delete sucess', 204);
     }
 }
