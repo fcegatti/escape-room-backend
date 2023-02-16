@@ -17,7 +17,7 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'escape_id' =>fake()->randomDigit(),    
+            
             'maxUsers' => fake()->randomDigit(),
             'init_time' => fake()->time(),
             'points' => fake()->randomDigit(),

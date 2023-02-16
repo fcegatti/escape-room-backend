@@ -9,14 +9,15 @@ class Escape extends Model
 {
     use HasFactory;
 
+    // Relacion muchos a muchos
     public function problems(){
 
         return $this->belongsToMany(Problem::class);
     }
 
-
-    public function rooms(){
-        
+    // Relacion uno a muchos
+    public function rooms(){   
+             
         return $this->hasMany(Room::class);
     }
 }

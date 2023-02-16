@@ -24,11 +24,12 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {  
         $request->validate([
         'maxUsers'=> 'required',
         'init_time'=> 'required',
         'points'=> 'required',
+        'escapes'=> 'required'
         ]);
 
         $room= new Room();
@@ -37,6 +38,8 @@ class RoomController extends Controller
         $room->points = $request->points;
 
         $room->save();
+        
+        // buscame en la DB el escape, y asignale esta room 
         return $room;
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Escape;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class EscapeController extends Controller
@@ -15,7 +16,7 @@ class EscapeController extends Controller
     public function index()
 
     {     
-        $escapes = Escape::with(['problems'])->get();
+        $escapes = Escape::with(['problems','rooms','users'])->get();
         return response()->json([
             'escapes' => $escapes,
         ]);
@@ -45,6 +46,12 @@ class EscapeController extends Controller
         $escape->stage = $request->stage;
         $escape->save();
 
+        // // for ($i=0; $i < $request->rooms->length; $i++) {
+        // //     $room = Room::find($request->rooms[$i] );
+        // // $escape->rooms()->save($room); 
+            
+        // }
+        
         return $escape;     
     }
 

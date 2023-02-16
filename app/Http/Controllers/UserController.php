@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //buscar la room a la que pertenece ( pasar id)
     }
 
     /**
@@ -51,6 +51,7 @@ class UserController extends Controller
     {
         $user->participed = $request->input('participed') == 'true' ? true : false;
         $user->save();
+
         return response()->json($user);
     }
 
