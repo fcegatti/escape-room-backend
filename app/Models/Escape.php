@@ -9,6 +9,20 @@ class Escape extends Model
 {
     use HasFactory;
 
+        /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'title',
+        'status',
+        'time',
+        'init_time',
+        'stage',
+        'rooms_amount',
+    ];
+
     // Relacion muchos a muchos
     public function problems(){
 
