@@ -81,40 +81,45 @@ class UserTest extends TestCase
 
     public function test_register_admin_return_access_token()
     {
-
+        //generate data user
         $dataUser = [
             'name' => 'nameexample',
             'email' => 'example@email.com',
             'password' => 'examplepassword',
             'password_confirmation' => 'examplepassword',
         ];
-
+        
+        //generate data super admin by seeders
         $data_super_admin = [
             'email' => 'super_admin@gmail.com',
             'password' => 'adminpassword',
         ];
         
+        //login with data_super_admin
         $response = $this->post('/api/login',$data_super_admin);
         
+        // get token super admin
+        $token = $response['token'];
+        
         $response->assertStatus(200);
         
-
-        $token = $response['token'];
-
-
+        
+        
+        // create admin with dataUser and token of super admin
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
-        ])->post('/api/register_admin', $dataUser);
-        
-        $response->assertStatus(200);
-        
-        $response->assertJsonStructure(['token']);
-        
-        $this->assertDatabaseHas('users', [
-            'name' => 'nameexample',
-            'email' => 'example@email.com',
-            'role' => 'admin',
-        ]);
-        
-    }
+            ])->post('/api/register_admin', $dataUser);
+            
+            $response->assertStatus(200);
+            
+            $response->assertJsonStructure(['token']);
+            
+            // compare the new admin
+            $this->assertDatabaseHas('users', [
+                'name' => 'nameexample',
+                'email' => 'example@email.com',
+                'role' => 'admin',
+            ]);
+            
+        }
 }
