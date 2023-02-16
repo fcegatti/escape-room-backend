@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('escape_problem', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-
             $table->unsignedBigInteger('escape_id');
+            $table->integer('maxUsers');
+            $table->time('init_time');
+            $table->integer('points');
+            $table->timestamps();
+            
+            
             $table->foreign('escape_id')->references('id')->on('escapes')->onDelete('cascade');
-    
-            $table->unsignedBigInteger('problem_id');
-            $table->foreign('problem_id')->references('id')->on('problems')->onDelete('cascade');
-        
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('escape_problem');
+        Schema::dropIfExists('rooms');
     }
 };

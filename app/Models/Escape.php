@@ -11,7 +11,13 @@ class Escape extends Model
 
     public function problems(){
 
-    return $this->belongsToMany(Problem::class);
+        return $this->belongsToMany(Problem::class);
+    }
+
+
+    public function rooms(){
+        
+        return $this->hasMany(Room::class);
     }
 }
 

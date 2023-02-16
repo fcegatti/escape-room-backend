@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Escape::factory(5)->create();
         
         \App\Models\Problem::factory(5)->create();
+        \App\Models\Room::factory(5)->create();
 
        $escape = \App\Models\Escape::factory()->create([
             'title' => fake()->name(),
@@ -30,6 +31,10 @@ class DatabaseSeeder extends Seeder
 
         $escape->problems()->attach([
             1,2
+        ]);
+
+        $escape->rooms()->attach([
+            1,3
         ]);
         
 

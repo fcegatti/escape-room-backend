@@ -45,8 +45,6 @@ class EscapeController extends Controller
         $escape->stage = $request->stage;
         $escape->save();
 
-        
-        //el sync nos va a incertar los datos en la tabla intermedia
         return $escape;     
     }
 
