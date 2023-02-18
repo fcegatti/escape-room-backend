@@ -45,7 +45,8 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'error server'], 500);
         }
-        return response()->json(compact('token'));
+        $user = auth()->user(); // Obtiene el usuario autenticado actualmente
+        return response()->json(compact('token', 'user'));
     }
 
     public function register_admin(Request $request)
@@ -70,5 +71,4 @@ class AuthController extends Controller
             'token' => $token
         ], 200);
     }
-
 }
