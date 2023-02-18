@@ -16,7 +16,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('jwt.verify')->group(function () {
     Route::apiResource('escape', EscapeController::class);
-    Route::post('users/participed', [UserController::class, 'update']);
+    Route::post('users/participed/{user}', [UserController::class, 'update']);
     
 });
 
