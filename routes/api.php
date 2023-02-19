@@ -10,19 +10,23 @@ use App\Http\Controllers\EscapeController;
 
 Route::apiResource('problem', ProblemController::class);
 
+//public
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('users', [UserController::class, 'index']);
-
-//protected
-
-Route::middleware('jwt.verify') -> group(function(){
-    Route::apiResource('users', UserController::class);
+Route::middleware('jwt.verify')->group(function () {
+    Route::apiResource('escape', EscapeController::class);
+    Route::put('users/participed/{user}', [UserController::class, 'update']);
+    
 });
 
+//only super admin
+Route::middleware('role:super_admin')->group(function () {
+    Route::post('register_admin', [AuthController::class, 'register_admin']);
+});
 
-Route::post('escape', [EscapeController::class, 'store']);
-Route::get('escape', [EscapeController::class, 'index']);
-Route::apiResource('escape', EscapeController::class);
-// ruta para todos los metodos 
+//admin and super_admin 
+Route::middleware('role:admin,super_admin')->group(function () {
+    Route::get('users', [UserController::class, 'index']);
+    Route::delete('users/deleted/{user}', [UserController::class, 'destroy']);
+});
