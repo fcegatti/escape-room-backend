@@ -19,30 +19,30 @@ class DatabaseSeeder extends Seeder
         \App\Models\Escape::factory(5)->create();
         
         \App\Models\Problem::factory(5)->create();
-        \App\Models\Room::factory(5)->create();
+        // \App\Models\Room::factory(5)->create();
 
         $escape = \App\Models\Escape::factory()->create([
             'title' => fake()->name(),
             'status' => 'status',
-            'time' => fake()->time(),
+            'time' => fake()->randomDigit(),
             'init_time' => fake()->date(),
             'stage' =>fake()->randomDigit(),
             'rooms_amount' =>fake()->randomDigit(),
 
         ]);
         // many to many
-        $escape->problems()->attach([
-            1,2,3
-        ]);
+        // $escape->problems()->attach([
+        //     1,2,3
+        // ]);
         // one to many
-        $room = Room::find(1);
-        $escape->rooms()->save($room);
+        // $room = Room::find(1);
+        // $escape->rooms()->save($room);
 
-        $room = Room::find(2);
-        $escape->rooms()->save($room);
+        // $room = Room::find(2);
+        // $escape->rooms()->save($room);
         
-        $room = Room::find(2);
-        $escape->rooms()->save($room);
+        // $room = Room::find(2);
+        // $escape->rooms()->save($room);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
