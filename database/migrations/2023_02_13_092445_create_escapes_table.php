@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('status');
             $table->integer('time');
-            $table->date('init_time');
-            $table->integer('stage');
             $table->integer('rooms_amount');
         });
     }

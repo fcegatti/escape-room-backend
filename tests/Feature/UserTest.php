@@ -45,7 +45,8 @@ class UserTest extends TestCase
             'email' => 'example@email.com',
         ]);
     }
-
+    
+    /** @test */
     public function test_login_return_access_token()
     {
         $dataUser = [
@@ -79,6 +80,7 @@ class UserTest extends TestCase
         
     }
 
+    /** @test */
     public function test_register_admin_return_access_token()
     {
         //generate data user

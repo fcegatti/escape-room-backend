@@ -34,6 +34,22 @@ class Escape extends Model
              
         return $this->hasMany(Room::class);
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function($escape) {
+            $roomsAmount = $escape->rooms_amount;
+            for ($i = 1; $i <= $roomsAmount; $i++) {
+                $room = new Room();
+                $room->escape_id = $escape->id;
+                $room->maxUsers = 10;
+                $room->init_time = '2023-03-15 20:30:00';
+                $room->points = 0;
+                $room->save();
+            }
+        });
+    }
 
     public function users(){   
              

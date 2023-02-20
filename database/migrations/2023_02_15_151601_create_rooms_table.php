@@ -15,19 +15,18 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('escape_id')->nullable(); 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('escape_id')->nullable();
+            // $table->unsignedBigInteger('user_id');
             $table->integer('maxUsers');
             $table->dateTime('init_time');
             $table->integer('points');
             $table->timestamps();
-            
-            $table->foreign('escape_id')
-                    ->references('id')->on('escapes')
-                    ->onDelete('cascade');
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+            // $table->foreign('escape_id')
+            //     ->references('id')->on('escapes')
+            //     ->onDelete('cascade');
+            // $table->foreign('user_id')
+            //     ->references('id')->on('users')
+            //     ->onDelete('cascade');
         });
     }
 
