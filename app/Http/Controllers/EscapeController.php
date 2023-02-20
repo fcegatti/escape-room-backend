@@ -17,7 +17,7 @@ class EscapeController extends Controller
     {
         $escapes = Escape::with(['problems', 'rooms'])->get();
 
-        return response()->json(['success' => true, "escape" => $escapes], 201);
+        return response()->json(['success' => true, "escape" => $escapes], 200);
     }
 
 

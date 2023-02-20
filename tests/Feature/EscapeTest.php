@@ -11,23 +11,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class EscapeTest extends TestCase
 {
 
+
+    private $token;
+
     public function setUp(): void
     {
         parent::setUp();
         Artisan::call('migrate:fresh --seed');
-    }
-
-    public function tearDown(): void
-    {
-        Artisan::call('migrate:reset');
-        parent::tearDown();
-    }
-
-
-    /** @test */
-    public function a_escape_can_be_created_return_escape_room()
-    {
-
         $data_super_admin = [
             'email' => 'super_admin@gmail.com',
             'password' => 'adminpassword',
@@ -37,12 +27,21 @@ class EscapeTest extends TestCase
         $response = $this->post('/api/login', $data_super_admin);
 
         // get token super admin
-        $token = $response['token'];
+        $this->token = $response['token'];
+    }
 
-        $response->assertStatus(200);
+    public function tearDown(): void
+    {
+        Artisan::call('migrate:reset');
+        parent::tearDown();
+    }
+
+    /** @test */
+    public function a_escape_can_be_created_return_escape_room()
+    {
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer ' . $this->token,
         ])->post('/api/escape', [
             'title' => 'Test Title',
             'status' => 'Test Status',
@@ -53,14 +52,62 @@ class EscapeTest extends TestCase
 
         $response->assertStatus(201);
 
-        // $this->assertCount(1, Escape::all());
 
-        // $escape = Escape::first();
-        // $this->assertEquals($escape->title, 'Test Title');
-        // $this->assertEquals($escape->status, 'Test Status');
-        // $this->assertEquals($escape->time, 'Test Time');
-        // $this->assertEquals($escape->init_time, 'Test Init_time');
-        // $this->assertEquals($escape->stage, 'Test Stage');
-        // $this->assertEquals($escape->amount, 'Test Rooms_amount');
+        $response->assertJsonStructure([
+            'success',
+            'message',
+            'escape' => [
+                'title',
+                'status',
+                'time',
+                'rooms_amount',
+                'updated_at',
+                'created_at',
+                'id'
+            ]
+        ]);
+    }
+    /** @test */
+    public function test_index_escape_return_escapes_with_rooms()
+    {
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->get('/api/escape', [
+            'title' => 'Test Title',
+            'status' => 'Test Status',
+            'time' => 9,
+            'stage' => 2,
+            'rooms_amount' => 3,
+        ]);
+
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'success',
+            'escape' => [
+                '*' => [
+                    'id',
+                    'created_at',
+                    'updated_at',
+                    'title',
+                    'status',
+                    'time',
+                    'rooms_amount',
+                    'problems',
+                    'rooms' => [
+                        '*' => [
+                            'id',
+                            'escape_id',
+                            'maxUsers',
+                            'init_time',
+                            'points',
+                            'created_at',
+                            'updated_at',
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
     }
 }
