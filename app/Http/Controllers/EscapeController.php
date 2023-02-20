@@ -31,7 +31,6 @@ class EscapeController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'status' => 'required',
             'time' => 'required',
             'rooms_amount' => 'required'
         ]);
