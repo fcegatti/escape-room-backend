@@ -67,21 +67,39 @@ class EscapeController extends Controller
      * @param  \App\Models\Escape  $escape
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Escape $escape)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'status' => 'required',
-            'time' => 'required',
-            'init_time' => 'required',
-            'stage' => 'required',
+            'title' => 'sometimes|required',
+            'time' => 'sometimes|required',
+            'rooms_amount' => 'sometimes|required'
         ]);
 
-        $escape->title = $request->title;
-        $escape->status = $request->status;
-        $escape->time = $request->time;
-        $escape->init_time = $request->init_time;
-        $escape->update();
+        try {
+            $escape = Escape::findOrFail($id);
+
+            if ($request->has('title')) {
+                $escape->title = $request->title;
+            }
+
+            if ($request->has('time')) {
+                $escape->time = $request->time;
+            }
+
+            if ($request->has('status')) {
+                $escape->status = $request->status;
+            }
+
+            if ($request->has('rooms_amount')) {
+                $escape->rooms_amount = $request->rooms_amount;
+            }
+
+            $escape->save();
+
+            return response()->json(['success' => true, 'message' => 'Escape updated successfully', "escape" => $escape], 200);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error updating escape: ' . $e->getMessage()]);
+        }
     }
 
     /**

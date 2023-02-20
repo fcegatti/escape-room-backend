@@ -72,13 +72,7 @@ class EscapeTest extends TestCase
     {
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $this->token,
-        ])->get('/api/escape', [
-            'title' => 'Test Title',
-            'status' => 'Test Status',
-            'time' => 9,
-            'stage' => 2,
-            'rooms_amount' => 3,
-        ]);
+        ])->get('/api/escape');
 
         $response->assertStatus(200);
 
@@ -107,6 +101,67 @@ class EscapeTest extends TestCase
                     ]
                 ]
             ]
+        ]);
+    }
+
+    public function test_update_escape_room_return_new_escape_room()
+    {
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->post('/api/escape', [
+            'title' => 'Test Title',
+            'status' => 'Test Status',
+            'time' => 9,
+            'stage' => 2,
+            'rooms_amount' => 3,
+        ]);
+
+        $response->assertStatus(201);
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->put('/api/escape/1', [
+            'title' => 'Test Title updated',
+            'status' => 'Test Status updated',
+            'time' => 10,
+            'stage' => 3,
+            'rooms_amount' => 4,
+        ]);
+
+        $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'success',
+            'message',
+            'escape' => [
+                'title',
+                'status',
+                'time',
+                'rooms_amount',
+                'updated_at',
+                'created_at',
+                'id'
+            ]
+        ]);
+
+        // Verifica el título actualizado del escape
+        $response->assertJsonFragment([
+            'title' => 'Test Title updated'
+        ]);
+
+        // Verifica el estado actualizado del escape
+        $response->assertJsonFragment([
+            'status' => 'Test Status updated'
+        ]);
+
+        // Verifica el tiempo actualizado del escape
+        $response->assertJsonFragment([
+            'time' => 10
+        ]);
+
+        $response->assertJsonFragment([
+            'rooms_amount' => 4,
         ]);
 
     }
