@@ -38,7 +38,7 @@ class EscapeController extends Controller
         try {
             $escape = new Escape();
             $escape->title = $request->title;
-            $escape->status = $request->status;
+            $escape->status = 'sin iniciar';
             $escape->time = $request->time;
             $escape->rooms_amount = $request->rooms_amount;
             $escape->save();
