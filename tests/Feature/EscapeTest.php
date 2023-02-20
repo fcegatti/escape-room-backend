@@ -47,7 +47,7 @@ class EscapeTest extends TestCase
             'title' => 'Test Title',
             'status' => 'Test Status',
             'time' => 9,
-            'init_time' => '2000-11-11',
+            'init_time' => '2023-03-15 20:30:00',
             'stage' => 2,
             'rooms_amount' => 3,
         ]);

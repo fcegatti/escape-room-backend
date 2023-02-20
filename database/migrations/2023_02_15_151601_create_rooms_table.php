@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('escape_id')->nullable(); 
             $table->unsignedBigInteger('user_id');
             $table->integer('maxUsers');
-            $table->time('init_time');
+            $table->dateTime('init_time');
             $table->integer('points');
             $table->timestamps();
             
