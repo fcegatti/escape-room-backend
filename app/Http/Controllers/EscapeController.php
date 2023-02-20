@@ -16,9 +16,8 @@ class EscapeController extends Controller
     public function index()
     {
         $escapes = Escape::with(['problems', 'rooms'])->get();
-        return response()->json([
-            'escapes' => $escapes, 200
-        ]);
+
+        return response()->json(['success' => true, "escape" => $escapes], 201);
     }
 
 
@@ -45,7 +44,7 @@ class EscapeController extends Controller
             $escape->rooms_amount = $request->rooms_amount;
             $escape->save();
 
-            return response()->json(['success' => true, 'message' => 'Escape created successfully',"escape"=> $escape], 201);
+            return response()->json(['success' => true, 'message' => 'Escape created successfully', "escape" => $escape], 201);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Error creating escape: ' . $e->getMessage()]);
         }
