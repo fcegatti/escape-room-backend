@@ -15,7 +15,6 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('jwt.verify')->group(function () {
-    Route::apiResource('escape', EscapeController::class);
     Route::put('users/participed/{user}', [UserController::class, 'update']);
     
 });
@@ -29,4 +28,5 @@ Route::middleware('role:super_admin')->group(function () {
 Route::middleware('role:admin,super_admin')->group(function () {
     Route::get('users', [UserController::class, 'index']);
     Route::delete('users/deleted/{user}', [UserController::class, 'destroy']);
+    Route::apiResource('escape', EscapeController::class);
 });
