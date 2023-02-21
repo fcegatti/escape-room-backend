@@ -27,6 +27,7 @@ Route::middleware('role:super_admin')->group(function () {
 //admin and super_admin 
 Route::middleware('role:admin,super_admin')->group(function () {
     Route::get('users', [UserController::class, 'index']);
+    Route::post('user/assign', [AuthController::class, 'create_aspirant_assign_room']);
     Route::delete('users/deleted/{user}', [UserController::class, 'destroy']);
     Route::apiResource('escape', EscapeController::class);
 });

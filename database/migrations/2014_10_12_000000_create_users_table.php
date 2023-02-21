@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('role')->default('aspirante');
             $table->string('password');
+            $table->unsignedBigInteger('room_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

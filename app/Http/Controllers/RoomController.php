@@ -14,7 +14,10 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return Room::all();
+        $room = Room::with(['users'])->get();
+
+        return response()->json(['success' => true, "escape" => $room], 200);
+
     }
 
     /**
