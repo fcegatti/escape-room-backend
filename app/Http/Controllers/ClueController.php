@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Clue;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class ClueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return response()->json($user);
+      return Clue::all();
     }
 
     /**
@@ -26,44 +26,66 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //buscar la room a la que pertenece ( pasar id)
+      $clue = new Clue();
+      $request->validate([
+        'clue'=> 'required',
+
+      ]);
+
+      $clue->clue = $request->clue;
+
+      $clue->save();
+
+      return $clue;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Clue  $clue
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Clue $clue, $id)
     {
-        //
+      $clue = Clue::find($id);
+      return $clue;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Clue  $clue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Clue $clue, $id)
     {
-        $user->participed = $request->input('participed') == 'true' ? true : false;
-        $user->save();
+      $clue = Clue::find($id);
+      $request->validate([
+        'clu'=> 'required',
 
-        return response()->json($user);
+      ]);
+
+      $clue->clue = $request->clue;
+
+      $clue->update();
+
+      return $clue;
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Clue  $clue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Clue $clue, $id)
     {
-        $user->delete();
-        return response()->json('Deleted successfully', 204);
+      $clue = Clue::find($id);
+
+      $clue->delete();
     }
-}
+
+
+    }
