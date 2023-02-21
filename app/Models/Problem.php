@@ -9,6 +9,12 @@ class Problem extends Model
 {
     use HasFactory;
 
+    public function escapes(){
+
+        return $this->belongsToMany(Escape::class);
+        
+        }
+
     public function clues() {
       return $this->hasMany(Clue::class);
     }
@@ -18,6 +24,8 @@ class Problem extends Model
     }
 
 }
+
+
 
 
 

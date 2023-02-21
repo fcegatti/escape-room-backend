@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('escapes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->boolean('participed')->default(false);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('role')->default('aspirante');
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
+            $table->string('title');
+            $table->string('status');
+            $table->integer('time');
+            $table->date('init_time');
+            $table->integer('stage');
+            $table->integer('rooms_amount');
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('escapes');
     }
 };

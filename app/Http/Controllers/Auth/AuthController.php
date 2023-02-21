@@ -23,7 +23,8 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role' => 'aspirant',
         ]);
 
         $token = JWTAuth::fromUser($user);
@@ -44,6 +45,30 @@ class AuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'error server'], 500);
         }
-        return response()->json(compact('token'));
+        $user = auth()->user(); // Obtiene el usuario autenticado actualmente
+        return response()->json(compact('token', 'user'));
+    }
+
+    public function register_admin(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'admin'
+        ]);
+
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ], 200);
     }
 }
