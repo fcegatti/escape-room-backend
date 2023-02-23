@@ -17,7 +17,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('jwt.verify')->group(function () {
     Route::apiResource('escape', EscapeController::class);
     Route::put('users/participed/{user}', [UserController::class, 'update']);
-    
+    Route::get('clue', [ClueController::class, 'index']);
+Route::get('image', [ImageController::class, 'index']);
+
 });
 
 //only super admin

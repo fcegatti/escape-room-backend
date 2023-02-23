@@ -14,6 +14,19 @@ class Problem extends Model
         return $this->belongsToMany(Escape::class);
         
         }
+
+    public function clues() {
+      return $this->hasMany(Clue::class);
+    }
+
+    public function images() {
+      return $this->hasMany(Image::class);
+    }
+
 }
+
+
+
+
 
 

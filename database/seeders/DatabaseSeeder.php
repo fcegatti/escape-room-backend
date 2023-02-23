@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Clue;
+use App\Models\Image;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Room;
@@ -20,6 +22,9 @@ class DatabaseSeeder extends Seeder
         
         \App\Models\Problem::factory(5)->create();
         // \App\Models\Room::factory(5)->create();
+
+        \App\Models\Clue::factory(10)->create();
+        \App\Models\Image::factory(10)->create();
 
         $escape = \App\Models\Escape::factory()->create([
             'title' => fake()->name(),
