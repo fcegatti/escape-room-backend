@@ -54,6 +54,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
+        $room->load('users');
         return $room;
     }
 
