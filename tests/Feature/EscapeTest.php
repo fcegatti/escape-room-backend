@@ -167,7 +167,7 @@ class EscapeTest extends TestCase
     }
     /** @test */
 
-    public function an_escape_can_be_deleted()
+    public function test_delete_escape_return_status_204()
     {
         // Crear un escape
         $escape = Escape::factory()->create();
