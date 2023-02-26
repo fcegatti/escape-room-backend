@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -76,35 +77,33 @@ class AuthController extends Controller
     public function create_aspirant_assign_room(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255',
+            'name' => 'required|min:6|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'room_id' => 'required|min:1'
         ]);
- 
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'role' =>'aspirant' ,
-        //     'room_id'=> $request->room_id,
-        // ]);
 
+        // Verificar si la sala existe
+        $room = Room::find($request->room_id);
+        if (!$room) {
+            return response()->json([
+                'error' => 'La sala no existe.'
+            ], 404);
+        }
+
+        // Verificar si todavía hay espacio
+        $room = Room::findOrFail($request->room_id);
+        if ($room->users()->count() >= $room->max_users) {
+            return response()->json(['message' => 'La sala ya ha alcanzado el número máximo de usuarios'], 400);
+        }
 
         $user = new User();
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password =Hash::make($request->password);
+        $user->password = Hash::make($request->name);
         $user->role = 'aspirant';
         $user->room_id = $request->room_id;
         $user->save();
-
-                // $room = new Room();
-                // $room->escape_id = $escape->id;
-                // $room->maxUsers = 10;
-                // $room->init_time = '2023-03-15 20:30:00';
-                // $room->points = 0;
-                // $room->save();
 
         $token = JWTAuth::fromUser($user);
 
@@ -112,11 +111,5 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $token
         ], 201);
-
-        // $user = new User;
-        // $user->name = 'John Doe';
-        // $user->email = 'johndoe@example.com';
-        // $user->room_id = $roomId;
-        // $user->save();
     }
 }
