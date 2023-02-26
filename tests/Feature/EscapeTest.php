@@ -103,6 +103,7 @@ class EscapeTest extends TestCase
             ]
         ]);
     }
+    /** @test */
 
     public function test_update_escape_room_return_new_escape_room()
     {
@@ -163,6 +164,23 @@ class EscapeTest extends TestCase
         $response->assertJsonFragment([
             'rooms_amount' => 4,
         ]);
+    }
+    /** @test */
 
+    public function an_escape_can_be_deleted()
+    {
+        // Crear un escape
+        $escape = Escape::factory()->create();
+
+        // Hacer la solicitud de eliminación del escape creado
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $this->token,
+        ])->delete('/api/escape/' . $escape->id);
+
+        // Verificar que la respuesta tenga el código 204 (sin contenido)
+        $response->assertStatus(204);
+
+        // Verificar que el escape ya no exista en la base de datos
+        $this->assertDatabaseMissing('escapes', ['id' => $escape->id]);
     }
 }
