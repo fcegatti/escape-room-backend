@@ -42,6 +42,7 @@ class EscapeController extends Controller
             $escape->time = $request->time;
             $escape->rooms_amount = $request->rooms_amount;
             $escape->save();
+            
 
             return response()->json(['success' => true, 'message' => 'Escape created successfully', "escape" => $escape], 201);
         } catch (\Exception $e) {
@@ -113,4 +114,6 @@ class EscapeController extends Controller
         $escape->delete();
         return response()->json('delete sucess', 204);
     }
+
+    
 }
