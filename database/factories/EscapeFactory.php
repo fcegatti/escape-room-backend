@@ -20,11 +20,8 @@ class EscapeFactory extends Factory
         return [
             'title' => fake()->name(),
             'status' => 'status',
-            'time' => fake()->time(),
-            'init_time' => fake()->date(),
-            'stage' =>fake()->randomDigit(),
+            'time' => fake()->randomDigit(),
             'rooms_amount' =>fake()->randomDigit(),
-                        
         ];
     }
 }

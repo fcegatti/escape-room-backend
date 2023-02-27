@@ -17,10 +17,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
-            $table->string('status');
+            $table->string('status')->default('sin iniciar');
             $table->integer('time');
-            $table->date('init_time');
-            $table->integer('stage');
             $table->integer('rooms_amount');
         });
     }
