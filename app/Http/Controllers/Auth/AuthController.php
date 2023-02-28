@@ -91,10 +91,10 @@ class AuthController extends Controller
         }
 
         // Verificar si todavía hay espacio
-        $room = Room::findOrFail($request->room_id);
-        if ($room->users()->count() >= $room->max_users) {
-            return response()->json(['message' => 'La sala ya ha alcanzado el número máximo de usuarios'], 400);
-        }
+        // $room = Room::findOrFail($request->room_id);
+        // if ($room->users()->count() >= $room->max_users) {
+        //     return response()->json(['message' => 'La sala ya ha alcanzado el número máximo de usuarios'], 400);
+        // }
 
         $user = new User();
 
