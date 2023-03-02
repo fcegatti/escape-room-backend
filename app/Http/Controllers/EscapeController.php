@@ -167,9 +167,9 @@ class EscapeController extends Controller
 
         // Enviar correo electrónico a cada usuario
         foreach ($users as $user) {
-            Mail::to($user->email)->send(new YouCredentials($user->name));
+            Mail::to($user->email)->send(new YouCredentials($user->name, $user->email));
         }
-
+            
         return response()->json(['success' => true]);
     }
 }

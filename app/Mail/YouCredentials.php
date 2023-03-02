@@ -20,10 +20,13 @@ class YouCredentials extends Mailable
      */
 
     public $userName;
+    public $email;
 
-    public function __construct($userName)
+    public function __construct($userName, $email)
     {
         $this->userName = $userName;
+
+        $this->email = $email;
 
     }
 
