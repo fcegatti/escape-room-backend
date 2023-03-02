@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Room;
 use App\Events\NewMessage;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
@@ -93,11 +94,14 @@ class RoomController extends Controller
         $room->delete();
     }
 
-    public function send_message()
+    public function send_message(Request $request)
     {
-        $message = "Hola, mundo!";
-        $user = Auth::user();
-        event(new NewMessage($message, $user));
+        $message = $request-> message;
+        $user = JWTAuth::parseToken()->authenticate();
+        $name = $user->name;
+        $room = $user->room->id;
+
+        event(new NewMessage($message, $name, $room));
         return $message;
     }
 }
