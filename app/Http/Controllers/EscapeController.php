@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Pusher\Pusher;
 use App\Models\Room;
 use App\Models\Escape;
+use App\Mail\YouCredentials;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class EscapeController extends Controller
 {
@@ -150,6 +152,24 @@ class EscapeController extends Controller
         $pusher->trigger($channelName, 'message-received', $data);
 
         // Devolver una respuesta al cliente
+        return response()->json(['success' => true]);
+    }
+
+
+    public function sendEmailsToUsers($escapeRoomId)
+    {
+        $escape = Escape::with('rooms.users')->find($escapeRoomId);
+
+        // Obtener todos los usuarios de los cuartos de escape
+        $users = $escape->rooms->flatMap(function ($room) {
+            return $room->users;
+        });
+
+        // Enviar correo electrónico a cada usuario
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new YouCredentials($user->name));
+        }
+
         return response()->json(['success' => true]);
     }
 }
