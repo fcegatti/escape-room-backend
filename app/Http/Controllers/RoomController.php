@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Events\NewMessage;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
@@ -17,7 +20,6 @@ class RoomController extends Controller
         $room = Room::with(['users'])->get();
 
         return response()->json(['success' => true, "escape" => $room], 200);
-
     }
 
     /**
@@ -27,21 +29,21 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  
+    {
         $request->validate([
-        'maxUsers'=> 'required',
-        'init_time'=> 'required',
-        'points'=> 'required',
-        'escapes'=> 'required'
+            'maxUsers' => 'required',
+            'init_time' => 'required',
+            'points' => 'required',
+            'escapes' => 'required'
         ]);
 
-        $room= new Room();
+        $room = new Room();
         $room->maxUsers = $request->maxUsers;
         $room->init_time = $request->init_time;
         $room->points = $request->points;
 
         $room->save();
-        
+
         // buscame en la DB el escape, y asignale esta room 
         return $room;
     }
@@ -68,18 +70,18 @@ class RoomController extends Controller
     public function update(Request $request, Room $room)
     {
         $request->validate([
-            'maxUsers'=> 'required',
-            'init_time'=> 'required',
-            'points'=> 'required',
-            ]);
-    
-            $room->maxUsers = $request->maxUsers;
-            $room->init_time = $request->init_time;
-            $room->points = $request->points;
-    
-            $room->update();
-            return $room;
-        }
+            'maxUsers' => 'required',
+            'init_time' => 'required',
+            'points' => 'required',
+        ]);
+
+        $room->maxUsers = $request->maxUsers;
+        $room->init_time = $request->init_time;
+        $room->points = $request->points;
+
+        $room->update();
+        return $room;
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -90,5 +92,16 @@ class RoomController extends Controller
     public function destroy(Room $room)
     {
         $room->delete();
+    }
+
+    public function send_message(Request $request)
+    {
+        $message = $request-> message;
+        $user = JWTAuth::parseToken()->authenticate();
+        $name = $user->name;
+        $room = $user->room->id;
+
+        event(new NewMessage($message, $name, $room));
+        return $message;
     }
 }

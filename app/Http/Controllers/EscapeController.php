@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Escape;
+use Pusher\Pusher;
 use App\Models\Room;
+use App\Models\Escape;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class EscapeController extends Controller
 {
@@ -42,6 +45,7 @@ class EscapeController extends Controller
             $escape->time = $request->time;
             $escape->rooms_amount = $request->rooms_amount;
             $escape->save();
+
 
             return response()->json(['success' => true, 'message' => 'Escape created successfully', "escape" => $escape], 201);
         } catch (\Exception $e) {
@@ -112,5 +116,40 @@ class EscapeController extends Controller
     {
         $escape->delete();
         return response()->json('delete sucess', 204);
+    }
+
+    public function sendMessageToRoom(Request $request)
+    {
+
+        $user = JWTAuth::parseToken()->authenticate();
+
+        echo $user->room->id;
+        if (!$user->room) {
+            // El usuario no está asociado a ninguna sala, devolver una respuesta de error
+            return response()->json(['error' => 'El usuario no está asociado a ninguna sala.']);
+        }
+
+        // Si llegamos aquí, el usuario está asociado a una sala, podemos continuar con el envío del mensaje
+        $message = $request->input('message');
+        $room = $user->room->id;
+
+        $data = [
+            'user_id' => $user->id,
+            'username' => $user->name,
+            'message' => $message,
+        ];
+
+        // Crear una instancia de Pusher
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), [
+            'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+            'encrypted' => true
+        ]);
+
+        // Enviar el mensaje a la sala específica
+        $channelName = 'room-' . $room;
+        $pusher->trigger($channelName, 'message-received', $data);
+
+        // Devolver una respuesta al cliente
+        return response()->json(['success' => true]);
     }
 }

@@ -33,3 +33,7 @@ Route::middleware('role:admin,super_admin')->group(function () {
     Route::apiResource('escape', EscapeController::class);
     Route::apiResource('rooms', RoomController::class);
 });
+
+Route::post('send',[RoomController::class, 'send_message']);
+// Route::get('send',[RoomController::class, 'send_message']);
+Route::post('send-room',[EscapeController::class, 'sendMessageToRoom']);

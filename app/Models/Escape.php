@@ -9,7 +9,7 @@ class Escape extends Model
 {
     use HasFactory;
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -24,21 +24,23 @@ class Escape extends Model
     ];
 
     // Relacion muchos a muchos
-    public function problems(){
+    public function problems()
+    {
 
         return $this->belongsToMany(Problem::class);
     }
 
     // Relacion uno a muchos
-    public function rooms(){   
-             
+    public function rooms()
+    {
+
         return $this->hasMany(Room::class);
     }
     protected static function boot()
     {
         parent::boot();
 
-        static::created(function($escape) {
+        static::created(function ($escape) {
             $roomsAmount = $escape->rooms_amount;
             for ($i = 1; $i <= $roomsAmount; $i++) {
                 $room = new Room();
@@ -47,12 +49,14 @@ class Escape extends Model
                 $room->init_time = '2023-03-15 20:30:00';
                 $room->points = 0;
                 $room->save();
+                $room->createPusherChannel();
             }
         });
     }
 
-    public function users(){   
-             
+    public function users()
+    {
+
         return $this->hasMany(User::class);
     }
 }
