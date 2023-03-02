@@ -21,11 +21,13 @@ class NewMessage implements ShouldBroadcast
      */
     public $message;
     public $user;
+    public $room;
 
-    public function __construct($message, $user)
+    public function __construct($message, $user, $room)
     {
         $this->message = $message;
         $this->user = $user;
+        $this->room = $room;
     }
     /**
      * Get the channels the event should broadcast on.
