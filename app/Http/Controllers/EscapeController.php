@@ -61,9 +61,26 @@ class EscapeController extends Controller
      * @param  \App\Models\Escape  $escape
      * @return \Illuminate\Http\Response
      */
-    public function show(Escape $escape)
+    public function show($id)
     {
-        return $escape;
+        $escape = Escape::with(['problems', 'rooms', 'rooms.users'])->findOrFail($id);
+        return response()->json(['success' => true, 'escape' => $escape], 200);
+    }
+
+    public function getUsersInRooms($id)
+    {
+        $escape = Escape::with(['problems', 'rooms.users'])->findOrFail($id);
+        $users = [];
+
+        foreach ($escape->rooms as $room) {
+            foreach ($room->users as $user) {
+                if (!in_array($user, $users)) {
+                    $users[] = $user;
+                }
+            }
+        }
+
+        return response()->json(['success' => true, 'users' => $users], 200);
     }
 
     /**
@@ -84,6 +101,8 @@ class EscapeController extends Controller
         try {
             $escape = Escape::findOrFail($id);
 
+            echo $request->title;
+            echo 'hola';
             if ($request->has('title')) {
                 $escape->title = $request->title;
             }
@@ -96,8 +115,32 @@ class EscapeController extends Controller
                 $escape->status = $request->status;
             }
 
+            echo 'esto son los rooms amount: ' . $request->rooms_amount;
             if ($request->has('rooms_amount')) {
-                $escape->rooms_amount = $request->rooms_amount;
+                // Actualizar rooms
+                $newRoomsAmount = $request->rooms_amount;
+                $oldRoomsAmount = $escape->rooms_amount;
+
+                if ($newRoomsAmount > $oldRoomsAmount) {
+                    // Agregar nuevas rooms
+
+                    for ($i = 0; $i < ($newRoomsAmount - $oldRoomsAmount); $i++) {
+                        $room = new Room();
+                        $room->escape_id = $escape->id;
+                        $room->maxUsers = 10;
+                        $room->init_time = '2023-03-15 20:30:00';
+                        $room->points = 0;
+                        $room->save();
+                    }
+                } else if ($newRoomsAmount < $oldRoomsAmount) {
+                    // Eliminar rooms existentes
+                    $roomsToDelete = $escape->rooms->splice($newRoomsAmount);
+                    foreach ($roomsToDelete as $room) {
+                        $room->delete();
+                    }
+                }
+
+                $escape->rooms_amount = $newRoomsAmount;
             }
 
             $escape->save();
@@ -169,7 +212,7 @@ class EscapeController extends Controller
         foreach ($users as $user) {
             Mail::to($user->email)->send(new YouCredentials($user->name, $user->email));
         }
-            
+
         return response()->json(['success' => true]);
     }
 }
