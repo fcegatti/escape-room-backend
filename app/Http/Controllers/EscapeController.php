@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Escape;
+use Pusher\Pusher;
 use App\Models\Room;
+use App\Models\Escape;
+use App\Mail\YouCredentials;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class EscapeController extends Controller
 {
@@ -43,6 +48,7 @@ class EscapeController extends Controller
             $escape->rooms_amount = $request->rooms_amount;
             $escape->save();
 
+
             return response()->json(['success' => true, 'message' => 'Escape created successfully', "escape" => $escape], 201);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Error creating escape: ' . $e->getMessage()]);
@@ -55,9 +61,26 @@ class EscapeController extends Controller
      * @param  \App\Models\Escape  $escape
      * @return \Illuminate\Http\Response
      */
-    public function show(Escape $escape)
+    public function show($id)
     {
-        return $escape;
+        $escape = Escape::with(['problems', 'rooms', 'rooms.users'])->findOrFail($id);
+        return response()->json(['success' => true, 'escape' => $escape], 200);
+    }
+
+    public function getUsersInRooms($id)
+    {
+        $escape = Escape::with(['problems', 'rooms.users'])->findOrFail($id);
+        $users = [];
+
+        foreach ($escape->rooms as $room) {
+            foreach ($room->users as $user) {
+                if (!in_array($user, $users)) {
+                    $users[] = $user;
+                }
+            }
+        }
+
+        return response()->json(['success' => true, 'users' => $users], 200);
     }
 
     /**
@@ -78,6 +101,8 @@ class EscapeController extends Controller
         try {
             $escape = Escape::findOrFail($id);
 
+            echo $request->title;
+            echo 'hola';
             if ($request->has('title')) {
                 $escape->title = $request->title;
             }
@@ -90,8 +115,32 @@ class EscapeController extends Controller
                 $escape->status = $request->status;
             }
 
+            echo 'esto son los rooms amount: ' . $request->rooms_amount;
             if ($request->has('rooms_amount')) {
-                $escape->rooms_amount = $request->rooms_amount;
+                // Actualizar rooms
+                $newRoomsAmount = $request->rooms_amount;
+                $oldRoomsAmount = $escape->rooms_amount;
+
+                if ($newRoomsAmount > $oldRoomsAmount) {
+                    // Agregar nuevas rooms
+
+                    for ($i = 0; $i < ($newRoomsAmount - $oldRoomsAmount); $i++) {
+                        $room = new Room();
+                        $room->escape_id = $escape->id;
+                        $room->maxUsers = 10;
+                        $room->init_time = '2023-03-15 20:30:00';
+                        $room->points = 0;
+                        $room->save();
+                    }
+                } else if ($newRoomsAmount < $oldRoomsAmount) {
+                    // Eliminar rooms existentes
+                    $roomsToDelete = $escape->rooms->splice($newRoomsAmount);
+                    foreach ($roomsToDelete as $room) {
+                        $room->delete();
+                    }
+                }
+
+                $escape->rooms_amount = $newRoomsAmount;
             }
 
             $escape->save();
@@ -112,5 +161,58 @@ class EscapeController extends Controller
     {
         $escape->delete();
         return response()->json('delete sucess', 204);
+    }
+
+    public function sendMessageToRoom(Request $request)
+    {
+
+        $user = JWTAuth::parseToken()->authenticate();
+
+        echo $user->room->id;
+        if (!$user->room) {
+            // El usuario no está asociado a ninguna sala, devolver una respuesta de error
+            return response()->json(['error' => 'El usuario no está asociado a ninguna sala.']);
+        }
+
+        // Si llegamos aquí, el usuario está asociado a una sala, podemos continuar con el envío del mensaje
+        $message = $request->input('message');
+        $room = $user->room->id;
+
+        $data = [
+            'user_id' => $user->id,
+            'username' => $user->name,
+            'message' => $message,
+        ];
+
+        // Crear una instancia de Pusher
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), [
+            'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+            'encrypted' => true
+        ]);
+
+        // Enviar el mensaje a la sala específica
+        $channelName = 'room-' . $room;
+        $pusher->trigger($channelName, 'message-received', $data);
+
+        // Devolver una respuesta al cliente
+        return response()->json(['success' => true]);
+    }
+
+
+    public function sendEmailsToUsers($escapeRoomId)
+    {
+        $escape = Escape::with('rooms.users')->find($escapeRoomId);
+
+        // Obtener todos los usuarios de los cuartos de escape
+        $users = $escape->rooms->flatMap(function ($room) {
+            return $room->users;
+        });
+
+        // Enviar correo electrónico a cada usuario
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new YouCredentials($user->name, $user->email));
+        }
+
+        return response()->json(['success' => true]);
     }
 }

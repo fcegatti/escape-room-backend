@@ -17,7 +17,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('jwt.verify')->group(function () {
     Route::put('users/participed/{user}', [UserController::class, 'update']);
-    
+    Route::post('send',[RoomController::class, 'send_message']);
 });
 
 //only super admin
@@ -32,4 +32,9 @@ Route::middleware('role:admin,super_admin')->group(function () {
     Route::delete('users/deleted/{user}', [UserController::class, 'destroy']);
     Route::apiResource('escape', EscapeController::class);
     Route::apiResource('rooms', RoomController::class);
+    Route::get('send-emails/{escape}',[EscapeController::class, 'sendEmailsToUsers']);
+    Route::get('get-users-in-rooms/{escape}',[EscapeController::class, 'getUsersInRooms']);
 });
+
+// Route::get('send',[RoomController::class, 'send_message']);
+// Route::post('send-room',[EscapeController::class, 'sendMessageToRoom']);
