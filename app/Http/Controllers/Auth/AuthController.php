@@ -18,7 +18,7 @@ class AuthController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:1|confirmed'
         ]);
 
         $user = User::create([
@@ -77,7 +77,7 @@ class AuthController extends Controller
     public function create_aspirant_assign_room(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:6|max:255',
+            'name' => 'required|min:1|max:255',
             'email' => 'required|email|max:255|unique:users',
             'room_id' => 'required|min:1'
         ]);
