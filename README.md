@@ -1,7 +1,7 @@
 # Escape Room 404 - Factoría F5
-![Escape Room 404](./src/assets/logotype/logo404.svg)
-![Factoría F5](src/assets/logotype/logo-factoria.png)
-![Factoría F5](src/assets/logotype/factoria.svg)
+![Escape Room 404](./assets/logotype/logo404.svg)
+![Factoría F5](./assets/logotype/logo-factoria.png)
+![Factoría F5](./assets/logotype/factoria.svg)
 
 ***
 ## Table of Contents
@@ -34,26 +34,26 @@ Escape Room 404 is a virtual escape room designed by Factoria F5 to assess the c
 
 <table>
 <tr>
-<td><img src="./src/assets/screenshots/screenshot001.png"></td>
-<td><img src="./src/assets/screenshots/screenshot002.png"></td>
-<td><img src="./src/assets/screenshots/screenshot003.png"></td>
-<td><img src="./src/assets/screenshots/screenshot004.png"></td>
+<td><img src="./assets/screenshots/screenshot001.png"></td>
+<td><img src="./assets/screenshots/screenshot002.png"></td>
+<td><img src="./assets/screenshots/screenshot003.png"></td>
+<td><img src="./assets/screenshots/screenshot004.png"></td>
 </tr>
 <tr>
-<td><img src="./src/assets/screenshots/screenshot005.png"></td>
-<td><img src="./src/assets/screenshots/screenshot006.png"></td>
-<td><img src="./src/assets/screenshots/screenshot007.png"></td>
-<td><img src="./src/assets/screenshots/screenshot008.png"></td>
+<td><img src="./assets/screenshots/screenshot005.png"></td>
+<td><img src="./assets/screenshots/screenshot006.png"></td>
+<td><img src="./assets/screenshots/screenshot007.png"></td>
+<td><img src="./assets/screenshots/screenshot008.png"></td>
 </tr>
 <tr>
-<td><img src="./src/assets/screenshots/screenshot009.png"></td>
-<td><img src="./src/assets/screenshots/screenshot010.png"></td>
-<td><img src="./src/assets/screenshots/screenshot011.png"></td>
-<td><img src="./src/assets/screenshots/screenshot012.png"></td>
+<td><img src="./assets/screenshots/screenshot009.png"></td>
+<td><img src="./assets/screenshots/screenshot010.png"></td>
+<td><img src="./assets/screenshots/screenshot011.png"></td>
+<td><img src="./assets/screenshots/screenshot012.png"></td>
 </tr>
 <tr>
-<td><img src="./src/assets/screenshots/screenshot013.png"></td>
-<td><img src="./src/assets/screenshots/screenshot014.png"></td>
+<td><img src="./assets/screenshots/screenshot013.png"></td>
+<td><img src="./assets/screenshots/screenshot014.png"></td>
 </tr>
 </table>
 
@@ -229,7 +229,4 @@ This project was developed as the final presentation of the P5.2022-23 class of 
 
 * Agile and SCRUM.
 * Pair programming.
-
-
-
 
