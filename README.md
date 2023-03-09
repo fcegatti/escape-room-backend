@@ -1,7 +1,9 @@
 # Escape Room 404 - Factoría F5
-![Escape Room 404](url image)
+![Escape Room 404](./src/assets/logotype/logo404.svg)
+![Factoría F5](src/assets/logotype/logo-factoria.png)
+![Factoría F5](src/assets/logotype/factoria.svg)
 
-
+***
 ## Table of Contents
 - [Escape Room 404 - Factoría F5](#escape-room-404---factoría-f5)
   - [Table of Contents](#table-of-contents)
@@ -19,13 +21,12 @@
   - [Support](#support)
   - [Authors](#authors)
   - [FAQs](#faqs)
+  - [About the project](#about-the-project)
   - [Tools](#tools)
   - [Methodology](#methodology)
 ***
 ## General Information
-Escape Room 404 is a virtual escape room designed by Factoria F5 for to assess the competencies of candidates during the selection process.
-
- 
+Escape Room 404 is a virtual escape room designed by Factoria F5 to assess the competencies of candidates during their selection process. 
 
 ***
 
@@ -33,16 +34,26 @@ Escape Room 404 is a virtual escape room designed by Factoria F5 for to assess t
 
 <table>
 <tr>
-<td><img src="./storage/images/screenshot001.png"></td>
-<td><img src="./storage/images/screenshot004.png"></td>
-<td><img src="./storage/images/screenshot003.png"></td>
-<td><img src="./storage/images/screenshot007.png"></td>
+<td><img src="./src/assets/screenshots/screenshot001.png"></td>
+<td><img src="./src/assets/screenshots/screenshot002.png"></td>
+<td><img src="./src/assets/screenshots/screenshot003.png"></td>
+<td><img src="./src/assets/screenshots/screenshot004.png"></td>
 </tr>
 <tr>
-<td><img src="./storage/images/screenshot002.png"></td>
-<td><img src="./storage/images/screenshot005.png"></td>
-<td><img src="./storage/images/screenshot006.png"></td>
-<td><img src="./storage/images/screenshot007.png"></td>
+<td><img src="./src/assets/screenshots/screenshot005.png"></td>
+<td><img src="./src/assets/screenshots/screenshot006.png"></td>
+<td><img src="./src/assets/screenshots/screenshot007.png"></td>
+<td><img src="./src/assets/screenshots/screenshot008.png"></td>
+</tr>
+<tr>
+<td><img src="./src/assets/screenshots/screenshot009.png"></td>
+<td><img src="./src/assets/screenshots/screenshot010.png"></td>
+<td><img src="./src/assets/screenshots/screenshot011.png"></td>
+<td><img src="./src/assets/screenshots/screenshot012.png"></td>
+</tr>
+<tr>
+<td><img src="./src/assets/screenshots/screenshot013.png"></td>
+<td><img src="./src/assets/screenshots/screenshot014.png"></td>
 </tr>
 </table>
 
@@ -60,6 +71,7 @@ The project was developed with the following technologies
 - Pusher PHP Server
 - GuzzleHttp
 - Tymon JWT Auth
+- Postman
 
 <p align="center">
 <img src= "https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white">
@@ -68,6 +80,7 @@ The project was developed with the following technologies
 <img src= "https://img.shields.io/badge/pusher-%2333457D.svg?style=for-the-badge&logo=pusher&logoColor=white">
 <img src= "https://img.shields.io/badge/guzzlehttp-%23000000.svg?style=for-the-badge&logo=guzzle&logoColor=white">
 <img src= "https://img.shields.io/badge/tymon%20jwt%20auth-%23FF2D20.svg?style=for-the-badge&logo=json-web-tokens&logoColor"> 
+<img src= "https://img.shields.io/badge/postman-%23FF6C37.svg?style=for-the-badge&logo=postman&logoColor=white">
  </p>
 
 ### Frontend Technologies
@@ -85,6 +98,8 @@ The project was developed with the following technologies
 - Styled-Components
 - Sweetalert
 - Vite-Plugin-Svgr
+- Babel
+- Jest
 
 <p align="center">
 <img src= "https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
@@ -99,6 +114,8 @@ The project was developed with the following technologies
 <img src= "https://img.shields.io/badge/styled--components-%23DB7093.svg?style=for-the-badge&logo=styled-components&logoColor=white">
 <img src= "https://img.shields.io/badge/sweetalert-%23EE3545.svg?style=for-the-badge&logo=sweetalert&logoColor=white">
 <img src= "https://img.shields.io/badge/vite--plugin--svgr-%23222222.svg?style=for-the-badge&logo=svg&logoColor=white">
+<img src= "https://img.shields.io/badge/babel-%23F9DC3E.svg?style=for-the-badge&logo=babel&logoColor=black">
+<img src= "https://img.shields.io/badge/jest-%23C21325.svg?style=for-the-badge&logo=jest&logoColor=white">
 
 
 ***
@@ -160,7 +177,7 @@ To install and run the frontend of Escape Room 404, please follow the steps belo
 ## Deployment
 
   
-[Visit our link](https://)
+[Visit our link](https://escape-room-backend-mcprj.ondigitalocean.app/api)
 
 
 ***
@@ -188,17 +205,31 @@ To handle any enquiries contact
 
 We'll fill this field when you ask something
 
+## About the project
+
+This project was developed as the final presentation of the P5.2022-23 class of the Full Stack bootcamp at Factoria F5.
+
 
 ## Tools
+
+- Figma
+- Notion
+- GitHub
+- Digital Ocean
+
 
 <p align="center">
 <a href="https://www.figma.com"><img src="https://img.shields.io/badge/Figma-%23F24E1E.svg?style=for-the-badge&logo=Figma&logoColor=white"></a>
 <a href="https://www.notion.so"><img src="https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=Notion&logoColor=white"></a>
 <a href="https://github.com"><img src="https://img.shields.io/badge/GitHub-%23181717.svg?style=for-the-badge&logo=GitHub&logoColor=white"></a>
+<a href="https://www.digitalocean.com"><img src="https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=DigitalOcean&logoColor=white"></a>
 </p>
 
 ## Methodology
 
 * Agile and SCRUM.
-* Mob programming.
 * Pair programming.
+
+
+
+
